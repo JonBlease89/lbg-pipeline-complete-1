@@ -1,13 +1,23 @@
-.field{
+.field {
   width: 300px;
-  padding-bottom: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 2px solid #4285F4;
+  border-radius: 5px;
+  background-color: #FFFFFF;
 }
 
-.colour-border{
-  border: 3px solid green;
+.colour-border {
+  border: 3px solid #34A853;
   padding: 10px;
+  border-radius: 5px;
 }
 
-.header{
+.header {
   padding: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  background-color: #F1F1F1;
+  color: #333333;
 }
