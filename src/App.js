@@ -4,11 +4,16 @@ import DisplayBlock from './DisplayBlock';
 import PriceEntryField from './PriceEntryField';
 import VatRateField from './VatRateField';
 
+function calculateDiscount(price) {
+  return price * 0.1;
+}
+
 function App() {
   const [netPrice, setNetPrice] = useState(0.0);
   const [grossPrice, setGrossPrice] = useState(0.0);
   const [vatToPay, setVatToPay] = useState(0.0);
   const [vatRate, setVatRate] = useState(20.0);
+  const [applyDiscount, setApplyDiscount] = useState(false);
 
   const handleNetPriceChange = (price) => {
     const gross_price = price * ((vatRate / 100) + 1);
@@ -29,8 +34,17 @@ function App() {
     updatePrices();
   };
 
+  const toggleDiscount = () => {
+    setApplyDiscount(!applyDiscount);
+  };
+
   const updatePrices = () => {
-    handleNetPriceChange(netPrice);
+    if (applyDiscount) {
+      const discountedPrice = calculateDiscount(netPrice);
+      handleNetPriceChange(netPrice - discountedPrice);
+    } else {
+      handleNetPriceChange(netPrice);
+    }
   };
 
   return (
@@ -41,6 +55,7 @@ function App() {
         <PriceEntryField customstyle="field" label="Price excl VAT: " priceChanged={handleNetPriceChange} price={netPrice === 0.0 ? "" : netPrice} />
         <DisplayBlock customstyle="field" label="VAT to pay: " value={vatToPay} />
         <PriceEntryField customstyle="field" label="Price incl VAT: " priceChanged={handleGrossPriceChange} price={grossPrice === 0.0 ? "" : grossPrice} />
+        <button onClick={toggleDiscount}>{applyDiscount ? 'Remove Discount' : 'Apply Discount'}</button>
       </div>
     </div>
   );
